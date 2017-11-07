@@ -32,7 +32,7 @@ func TestJsapiSign(t *testing.T) {
 	timeStamp := "123456789"
 	nonceStr := "nonceStr_value"
 	packageStr := "prepay_id=asdfasdfasdf"
-	signType := "MD5"
+	signType := SignType_MD5
 
 	params := map[string]string{
 		"appId":     appId,
@@ -79,7 +79,7 @@ func BenchmarkSign(b *testing.B) {
 	}
 }
 
-func BenchmarkSign2(b *testing.B) {
+func BenchmarkClassicalSign(b *testing.B) {
 	b.StopTimer()
 	var (
 		params = map[string]string{
@@ -103,12 +103,12 @@ func BenchmarkSign2(b *testing.B) {
 	b.ReportAllocs()
 	b.StartTimer()
 	for i := 0; i < b.N; i++ {
-		Sign2(params, apiKey, nil)
+		ClassicalSign(params, apiKey, nil)
 	}
 }
 
 // 传统的签名代码, Sign 是优化后的代码, 要提高 30% 的速度
-func Sign2(params map[string]string, apiKey string, fn func() hash.Hash) string {
+func ClassicalSign(params map[string]string, apiKey string, fn func() hash.Hash) string {
 	if fn == nil {
 		fn = md5.New
 	}

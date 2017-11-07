@@ -1,11 +1,10 @@
-// +build !wechatdebug
+// +build !wechat_debug
 
 package api
 
 import (
+	"encoding/json"
 	"io"
-
-	"github.com/chanxuehong/wechat.v2/json"
 )
 
 func DebugPrintGetRequest(url string) {}

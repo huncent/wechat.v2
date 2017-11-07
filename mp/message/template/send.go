@@ -7,19 +7,24 @@ import (
 )
 
 type TemplateMessage struct {
-	ToUser     string          `json:"touser"`             // 必须, 接受者OpenID
-	TemplateId string          `json:"template_id"`        // 必须, 模版ID
-	URL        string          `json:"url,omitempty"`      // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
-	TopColor   string          `json:"topcolor,omitempty"` // 可选, 整个消息的颜色, 可以不设置
-	Data       json.RawMessage `json:"data"`               // 必须, JSON 格式的 []byte, 满足特定的模板需求
+	ToUser      string          `json:"touser"`                // 必须, 接受者OpenID
+	TemplateId  string          `json:"template_id"`           // 必须, 模版ID
+	URL         string          `json:"url,omitempty"`         // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
+	MiniProgram *MiniProgram    `json:"miniprogram,omitempty"` // 可选, 跳小程序所需数据，不需跳小程序可不用传该数据
+	Data        json.RawMessage `json:"data"`                  // 必须, 模板数据, JSON 格式的 []byte, 满足特定的模板需求
 }
 
 type TemplateMessage2 struct {
-	ToUser     string      `json:"touser"`             // 必须, 接受者OpenID
-	TemplateId string      `json:"template_id"`        // 必须, 模版ID
-	URL        string      `json:"url,omitempty"`      // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
-	TopColor   string      `json:"topcolor,omitempty"` // 可选, 整个消息的颜色, 可以不设置
-	Data       interface{} `json:"data"`               // 必须, struct 或者 *struct, encoding/json.Marshal 后满足格式要求.
+	ToUser      string       `json:"touser"`                // 必须, 接受者OpenID
+	TemplateId  string       `json:"template_id"`           // 必须, 模版ID
+	URL         string       `json:"url,omitempty"`         // 可选, 用户点击后跳转的URL, 该URL必须处于开发者在公众平台网站中设置的域中
+	MiniProgram *MiniProgram `json:"miniprogram,omitempty"` // 可选, 跳小程序所需数据，不需跳小程序可不用传该数据
+	Data        interface{}  `json:"data"`                  // 必须, 模板数据, struct 或者 *struct, encoding/json.Marshal 后满足格式要求.
+}
+
+type MiniProgram struct {
+	AppId    string `json:"appid"`    // 必选; 所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系）
+	PagePath string `json:"pagepath"` // 必选; 所需跳转到的小程序appid（该小程序appid必须与发模板消息的公众号是绑定关联关系）
 }
 
 // 模版内某个 .DATA 的值
